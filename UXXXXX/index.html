@@ -1,0 +1,66 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ödeme Formu</title>
+</head>
+<body>
+  <h1>Ödeme Formu</h1>
+  <form id="paymentForm">
+    <label for="cardHolderName">Kart Sahibi Adı:</label>
+    <input type="text" id="cardHolderName" name="cardHolderName" required><br>
+
+    <label for="cardNumber">Kart Numarası:</label>
+    <input type="text" id="cardNumber" name="cardNumber" required><br>
+
+    <label for="expireMonth">Son Kullanma Ayı:</label>
+    <input type="text" id="expireMonth" name="expireMonth" required><br>
+
+    <label for="expireYear">Son Kullanma Yılı:</label>
+    <input type="text" id="expireYear" name="expireYear" required><br>
+
+    <label for="cvc">CVC:</label>
+    <input type="text" id="cvc" name="cvc" required><br>
+
+    <button type="submit">Ödemeyi Tamamla</button>
+  </form>
+
+  <script>
+    // public/script.js
+document.addEventListener('DOMContentLoaded', function () {
+  const paymentForm = document.getElementById('paymentForm');
+
+  paymentForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // Gather form data
+    const formData = new FormData(paymentForm);
+    const formObject = {};
+    formData.forEach((value, key) => {
+      formObject[key] = value;
+    });
+
+    // Send form data to the server using fetch
+    fetch('https://happy-garters-crow.cyclic.app/pay', {  // Update the endpoint URL
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formObject),
+    })
+      .then(response => response.text())
+      .then(responseText => {
+        // Handle the server response (you can update the UI accordingly)
+        console.log(responseText);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+});
+
+  </script>
+</body>
+</html>
