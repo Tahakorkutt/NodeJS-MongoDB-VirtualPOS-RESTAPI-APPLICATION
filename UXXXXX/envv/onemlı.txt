@@ -1,0 +1,1 @@
+Kullanacagın zaman env yi dışarı çıkar
